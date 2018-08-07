@@ -42,6 +42,7 @@ public class MainForm extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("WCA - World Cube Association");
+        setResizable(false);
 
         mainPanel.setName(""); // NOI18N
 

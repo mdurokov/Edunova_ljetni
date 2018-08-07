@@ -44,6 +44,8 @@ public class RoundTypesForm extends javax.swing.JFrame {
         table = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Round Types");
+        setResizable(false);
 
         addBtn.setText("Add");
 

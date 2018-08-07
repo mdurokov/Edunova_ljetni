@@ -44,6 +44,8 @@ public class EventsForm extends javax.swing.JFrame {
         table = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Events");
+        setResizable(false);
 
         addBtn.setText("Add");
 

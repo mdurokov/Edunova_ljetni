@@ -38,6 +38,8 @@ public class FormatsForm extends javax.swing.JFrame {
         table = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Formats");
+        setResizable(false);
 
         addBtn.setText("Add");
 

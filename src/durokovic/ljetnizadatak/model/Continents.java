@@ -1,5 +1,5 @@
 
-package durokovic.ljetnizadatak.tables;
+package durokovic.ljetnizadatak.model;
 
 import java.math.BigInteger;
 

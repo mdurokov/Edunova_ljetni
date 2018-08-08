@@ -1,23 +1,21 @@
 
 package durokovic.ljetnizadatak.model;
 
-import java.math.BigInteger;
-
 /**
  * @author Mata
  */
-public class Continents {
+public class Continent {
     //  INIT VARS
     private int id;
     private String name;
     private String recordName;
-    private BigInteger latitude;
-    private BigInteger longitude;
+    private int latitude;
+    private int longitude;
     private int zoom;
     //  END INIT VARS
     
     //  CONSTRUCTORS
-    public Continents(int id, String name, String recordName, BigInteger latitude, BigInteger longitude, int zoom) {
+    public Continent(int id, String name, String recordName, int latitude, int longitude, int zoom) {
         this.id = id;
         this.name = name;
         this.recordName = recordName;
@@ -26,7 +24,7 @@ public class Continents {
         this.zoom = zoom;
     }
 
-    public Continents() {
+    public Continent() {
     }
     //  END CONSTRUCTORS
 
@@ -55,19 +53,19 @@ public class Continents {
         this.recordName = recordName;
     }
 
-    public BigInteger getLatitude() {
+    public int getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(BigInteger latitude) {
+    public void setLatitude(int latitude) {
         this.latitude = latitude;
     }
 
-    public BigInteger getLongitude() {
+    public int getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(BigInteger longitude) {
+    public void setLongitude(int longitude) {
         this.longitude = longitude;
     }
 
@@ -79,9 +77,15 @@ public class Continents {
         this.zoom = zoom;
     }
     //  END GETTERS SETTERS
+
     
     @Override
     public String toString() {
-        return getName();
-    }   
+        return String.format
+            ("Continent [id=%s, name=%s, recordName=%s, longitue=%s, latitude=%s, zoom=%s]",  id, name, recordName, longitude, latitude, zoom);
+    }
+    
+    public String toString(int i){
+        return String.format("%s", i);
+    }
 }

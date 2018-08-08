@@ -4,18 +4,18 @@ package durokovic.ljetnizadatak.model;
 /**
  * @author Mata
  */
-public class Formats {
+public class Format {
     // INIT VARS
     private int id;
     private String name;
     
     // CONSTRUCTORS
-    public Formats(int id, String name) {
+    public Format(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Formats() {
+    public Format() {
     }
     //  END CONSTRUCTORS
     
@@ -39,7 +39,9 @@ public class Formats {
     //  END GETTERS SETTERS
     
     @Override
-    public String toString(){
-        return name;
-    }
+    public String toString() {
+        return String.format
+            ("Format [id=%s, name=%s]",  id, name);
+    
+    } 
 }

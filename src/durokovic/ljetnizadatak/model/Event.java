@@ -4,43 +4,34 @@ package durokovic.ljetnizadatak.model;
 /**
  * @author Mata
  */
-public class RoundTypes {
+public class Event {
     //  INIT VARS
     private int id;
-    private int rank;
     private String name;
+    private int rank;
+    private String format;
     private String cellName;
-    private int finale;
     
     //  CONSTRUCTORS
-    public RoundTypes(int id, int rank, String name, String cellName, int finale) {
+    public Event(int id, String name, int rank, String format, String cellName) {
         this.id = id;
-        this.rank = rank;
         this.name = name;
+        this.rank = rank;
+        this.format = format;
         this.cellName = cellName;
-        this.finale = finale;
     }
 
-    public RoundTypes() {
+    public Event() {
     }
-    //  END CONSTRUCTORS
+    //  END CONTSTRUCTORS
     
     //  GETTERS SETTERS
-
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getRank() {
-        return rank;
-    }
-
-    public void setRank(int rank) {
-        this.rank = rank;
     }
 
     public String getName() {
@@ -51,6 +42,22 @@ public class RoundTypes {
         this.name = name;
     }
 
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
+
     public String getCellName() {
         return cellName;
     }
@@ -58,15 +65,13 @@ public class RoundTypes {
     public void setCellName(String cellName) {
         this.cellName = cellName;
     }
-
-    public int getFinale() {
-        return finale;
-    }
-
-    public void setFinale(int finale) {
-        this.finale = finale;
-    }
     //  END GETTERS SETTERS
     
+    @Override
+    public String toString() {
+        return String.format
+            ("Event [id=%s, name=%s, rank=%s, format=%s, cellName=%s]",  id, name, rank, format, cellName);
+    
+    } 
     
 }

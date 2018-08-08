@@ -150,7 +150,7 @@ public class MainForm extends javax.swing.JFrame {
 
     private void continentsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continentsBtnActionPerformed
         ContinentsForm continentsForm = new ContinentsForm();
-        continentsForm.setVisible(true);
+        continentsForm.setVisible(true);        
     }//GEN-LAST:event_continentsBtnActionPerformed
 
     private void eventBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eventBtnActionPerformed
@@ -182,9 +182,7 @@ public class MainForm extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

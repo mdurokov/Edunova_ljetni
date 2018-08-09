@@ -75,5 +75,9 @@ public class RoundType {
     
     } 
     
+    public String toString(int i){
+        return String.format("%s", i);
+    }
+    
     
 }

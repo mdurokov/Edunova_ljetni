@@ -74,4 +74,8 @@ public class Event {
     
     } 
     
+    public String toString(int i){
+        return String.format("%s", i);
+    }
+    
 }

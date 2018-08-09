@@ -44,4 +44,8 @@ public class Format {
             ("Format [id=%s, name=%s]",  id, name);
     
     } 
+    
+    public String toString(int i){
+        return String.format("%s", i);
+    }
 }

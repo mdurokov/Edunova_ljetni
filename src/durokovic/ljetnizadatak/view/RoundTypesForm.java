@@ -5,17 +5,32 @@
  */
 package durokovic.ljetnizadatak.view;
 
+import durokovic.ljetnizadatak.contoller.RoundTypeController;
+import durokovic.ljetnizadatak.model.RoundType;
+import durokovic.ljetnizadatak.tablemodel.RoundTypeTableModel;
+import java.awt.Component;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Mata
  */
 public class RoundTypesForm extends javax.swing.JFrame {
-
+    private RoundTypeController roundTypeController;
+    private int row;
     /**
      * Creates new form RoundTypesForm
      */
     public RoundTypesForm() {
+        try {
+            roundTypeController = new RoundTypeController();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,"Error " + e, "Error", JOptionPane.ERROR_MESSAGE);
+        }
         initComponents();
+        refreshRoundTypeView();
     }
 
     /**
@@ -31,6 +46,7 @@ public class RoundTypesForm extends javax.swing.JFrame {
         addBtn = new javax.swing.JButton();
         updateBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
+        clearSelectionLbl = new javax.swing.JLabel();
         fieldsPanel = new javax.swing.JPanel();
         nameLbl = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
@@ -39,7 +55,7 @@ public class RoundTypesForm extends javax.swing.JFrame {
         rankLbl = new javax.swing.JLabel();
         rankField = new javax.swing.JTextField();
         finalLbl = new javax.swing.JLabel();
-        finalCombo = new javax.swing.JComboBox<>();
+        finalField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
 
@@ -48,22 +64,47 @@ public class RoundTypesForm extends javax.swing.JFrame {
         setResizable(false);
 
         addBtn.setText("Add");
+        addBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBtnActionPerformed(evt);
+            }
+        });
 
         updateBtn.setText("Update");
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBtnActionPerformed(evt);
+            }
+        });
 
         deleteBtn.setText("Delete");
         deleteBtn.setMaximumSize(new java.awt.Dimension(125, 23));
         deleteBtn.setMinimumSize(new java.awt.Dimension(125, 23));
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
+
+        clearSelectionLbl.setText("Clear Selection");
+        clearSelectionLbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                clearSelectionLblMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
         buttonPanel.setLayout(buttonPanelLayout);
         buttonPanelLayout.setHorizontalGroup(
             buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(clearSelectionLbl, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, buttonPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(updateBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(updateBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -76,24 +117,17 @@ public class RoundTypesForm extends javax.swing.JFrame {
                     .addComponent(addBtn)
                     .addComponent(updateBtn)
                     .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(clearSelectionLbl))
         );
 
         nameLbl.setText("Name: ");
-
-        nameField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nameFieldActionPerformed(evt);
-            }
-        });
 
         cellNameLbl.setText("Cell Name: ");
 
         rankLbl.setText("Rank: ");
 
         finalLbl.setText("Final: ");
-
-        finalCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout fieldsPanelLayout = new javax.swing.GroupLayout(fieldsPanel);
         fieldsPanel.setLayout(fieldsPanelLayout);
@@ -114,8 +148,8 @@ public class RoundTypesForm extends javax.swing.JFrame {
                     .addComponent(nameLbl))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(fieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(nameField)
-                    .addComponent(finalCombo, 0, 146, Short.MAX_VALUE))
+                    .addComponent(nameField, javax.swing.GroupLayout.DEFAULT_SIZE, 146, Short.MAX_VALUE)
+                    .addComponent(finalField))
                 .addContainerGap())
         );
         fieldsPanelLayout.setVerticalGroup(
@@ -132,7 +166,7 @@ public class RoundTypesForm extends javax.swing.JFrame {
                     .addComponent(rankLbl)
                     .addComponent(rankField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(finalLbl)
-                    .addComponent(finalCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(finalField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -147,6 +181,11 @@ public class RoundTypesForm extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(table);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -176,13 +215,92 @@ public class RoundTypesForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void nameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_nameFieldActionPerformed
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        row = table.getSelectedRow();
+        RoundType tempFormat = (RoundType) table.getValueAt(row, RoundTypeTableModel.OBJECT_COL);
+        populateRoundTypeGui(tempFormat);
+    }//GEN-LAST:event_tableMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
+    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
+        try {
+            String name = nameField.getText();
+            int rank = Integer.parseInt(rankField.getText());
+            String cellName = cellNameField.getText();
+            int finale = Integer.parseInt(finalField.getText());
+            
+            roundTypeController.addRoundType(rank, name, cellName, finale);
+            refreshRoundTypeView();
+            clearRoundTypeFields();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_addBtnActionPerformed
+
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+        try {
+            String name = nameField.getText();
+            int rank = Integer.parseInt(rankField.getText());
+            String cellName = cellNameField.getText();
+            int finale = Integer.parseInt(finalField.getText());
+            
+            row = table.getSelectedRow();
+            int id = (int) table.getValueAt(row, RoundTypeTableModel.ID_COL);
+            
+            roundTypeController.updateRoundType(id, rank, name, cellName, finale);
+            refreshRoundTypeView();
+            table.setRowSelectionInterval(row, row);
+        } catch (Exception e) {
+            //JOptionPane.showMessageDialog(this,"You need to select what to update!", "Info", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_updateBtnActionPerformed
+
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        try {
+            row = table.getSelectedRow();
+            int id = (int) table.getValueAt(row, RoundTypeTableModel.ID_COL);
+            roundTypeController.deleteRoundType(id);
+            refreshRoundTypeView();
+            clearRoundTypeFields();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,"You need to select what to delete!", "Info", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_deleteBtnActionPerformed
+
+    private void clearSelectionLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearSelectionLblMouseClicked
+        clearRoundTypeFields();
+        table.clearSelection();
+    }//GEN-LAST:event_clearSelectionLblMouseClicked
+
+    //  HELPER METHODS
+    public void refreshRoundTypeView(){
+        try {
+            List<RoundType> roundTypes = roundTypeController.getAllRoundTypes();
+            RoundTypeTableModel model = new RoundTypeTableModel(roundTypes);
+            table.setModel(model);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,"Error" + e, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void clearRoundTypeFields(){
+        for(Component components : fieldsPanel.getComponents()){
+            if(components instanceof JTextField){
+                ((JTextField) components).setText("");
+            }
+        }
+    }
+    
+    public void populateRoundTypeGui(RoundType tempRoundType){
+        nameField.setText(tempRoundType.getName());
+        rankField.setText(tempRoundType.toString(tempRoundType.getRank()));
+        cellNameField.setText(tempRoundType.getCellName());
+        finalField.setText(tempRoundType.toString(tempRoundType.getFinale()));
+    }
+    //  END HELPER METHODS
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -220,9 +338,10 @@ public class RoundTypesForm extends javax.swing.JFrame {
     private javax.swing.JPanel buttonPanel;
     private javax.swing.JTextField cellNameField;
     private javax.swing.JLabel cellNameLbl;
+    private javax.swing.JLabel clearSelectionLbl;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JPanel fieldsPanel;
-    private javax.swing.JComboBox<String> finalCombo;
+    private javax.swing.JTextField finalField;
     private javax.swing.JLabel finalLbl;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nameField;

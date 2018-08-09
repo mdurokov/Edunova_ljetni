@@ -18,14 +18,18 @@ public class ContinentTableModel extends AbstractTableModel{
     public static final int LONGITUDE_COL = 4;
     public static final int ZOOM_COL = 5;
     
+    //  Setting column names in view table
     private static final String[] columnNames = 
         {"id", "name", "recordName", "latitude", "longitude", "zoom"};
+    
     private List<Continent> continents;
     
+    //  CONSTRUCTOR
     public ContinentTableModel(List<Continent> theContinents) {
         continents = theContinents;
     }
     
+    //  IMPLEMENTED ABSTRACT METHODS
     @Override
     public String getColumnName(int col){
         return columnNames[col];
@@ -69,5 +73,5 @@ public class ContinentTableModel extends AbstractTableModel{
     public Class getColumnClass(int col){
         return getValueAt(0, col).getClass();
     }
-
+    //  END IMPLEMENTED ABSTRACT METHODS
 }

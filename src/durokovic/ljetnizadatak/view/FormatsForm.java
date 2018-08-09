@@ -5,17 +5,32 @@
  */
 package durokovic.ljetnizadatak.view;
 
+import durokovic.ljetnizadatak.contoller.FormatController;
+import durokovic.ljetnizadatak.model.Format;
+import durokovic.ljetnizadatak.tablemodel.FormatTableModel;
+import java.awt.Component;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+
 /**
  *
  * @author Mata
  */
 public class FormatsForm extends javax.swing.JFrame {
-
+    private FormatController formatController;
+    private int row;
     /**
      * Creates new form Formats
      */
     public FormatsForm() {
+        try {
+            formatController = new FormatController();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,"Error " + e, "Error", JOptionPane.ERROR_MESSAGE);
+        }
         initComponents();
+        refreshFormatView();
     }
 
     /**
@@ -31,9 +46,10 @@ public class FormatsForm extends javax.swing.JFrame {
         addBtn = new javax.swing.JButton();
         updateBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
+        clearSelectionLbl = new javax.swing.JLabel();
         fieldsPanel = new javax.swing.JPanel();
         cellNameLbl = new javax.swing.JLabel();
-        cellNameField = new javax.swing.JTextField();
+        nameField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
 
@@ -42,12 +58,34 @@ public class FormatsForm extends javax.swing.JFrame {
         setResizable(false);
 
         addBtn.setText("Add");
+        addBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addBtnActionPerformed(evt);
+            }
+        });
 
         updateBtn.setText("Update");
+        updateBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateBtnActionPerformed(evt);
+            }
+        });
 
         deleteBtn.setText("Delete");
         deleteBtn.setMaximumSize(new java.awt.Dimension(125, 23));
         deleteBtn.setMinimumSize(new java.awt.Dimension(125, 23));
+        deleteBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteBtnActionPerformed(evt);
+            }
+        });
+
+        clearSelectionLbl.setText("Clear Selection");
+        clearSelectionLbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                clearSelectionLblMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
         buttonPanel.setLayout(buttonPanelLayout);
@@ -57,10 +95,13 @@ public class FormatsForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(updateBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(updateBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(buttonPanelLayout.createSequentialGroup()
+                .addComponent(clearSelectionLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         buttonPanelLayout.setVerticalGroup(
             buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -70,7 +111,8 @@ public class FormatsForm extends javax.swing.JFrame {
                     .addComponent(addBtn)
                     .addComponent(updateBtn)
                     .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(clearSelectionLbl))
         );
 
         cellNameLbl.setText(" Name: ");
@@ -83,14 +125,14 @@ public class FormatsForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(cellNameLbl)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cellNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         fieldsPanelLayout.setVerticalGroup(
             fieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(fieldsPanelLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(fieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cellNameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cellNameLbl))
                 .addContainerGap())
         );
@@ -106,6 +148,11 @@ public class FormatsForm extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(table);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -135,9 +182,84 @@ public class FormatsForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
+    private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
+        try {
+            String name = nameField.getText();
+            
+            formatController.addFormat(name);
+            refreshFormatView();
+            clearFormatFields();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_addBtnActionPerformed
+
+    private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
+        try {
+            row = table.getSelectedRow();
+            int id = (int) table.getValueAt(row, FormatTableModel.ID_COL);
+            String name = nameField.getText();
+            
+            formatController.updateFormat(id, name);
+            refreshFormatView();
+            table.setRowSelectionInterval(row, row);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,"You need to select what to update!", "Info", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_updateBtnActionPerformed
+
+    private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
+        try {
+            row = table.getSelectedRow();
+            int id = (int) table.getValueAt(row, FormatTableModel.ID_COL);
+            
+            formatController.deleteFormat(id);
+            refreshFormatView();
+            clearFormatFields();            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,"You need to select what to delete!", "Info", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_deleteBtnActionPerformed
+
+    private void clearSelectionLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearSelectionLblMouseClicked
+        clearFormatFields();
+         table.clearSelection();
+    }//GEN-LAST:event_clearSelectionLblMouseClicked
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        row = table.getSelectedRow();
+        Format tempFormat = (Format) table.getValueAt(row, FormatTableModel.OBJECT_COL);
+        populateFormatGui(tempFormat);
+    }//GEN-LAST:event_tableMouseClicked
+
+    
+    
+    
+    //  HELPER METHODS
+    public void refreshFormatView(){
+        try {
+            List<Format> events = formatController.getAllFormats();
+            FormatTableModel model = new FormatTableModel(events);
+            table.setModel(model);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,"Error" + e, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    public void clearFormatFields(){
+        for(Component components : fieldsPanel.getComponents()){
+            if(components instanceof JTextField){
+                ((JTextField) components).setText("");
+            }
+        }
+    }
+    
+    public void populateFormatGui(Format tempEvent){
+        nameField.setText(tempEvent.getName());
+    }
+    //  END HELPER METHODS
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -174,11 +296,12 @@ public class FormatsForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
     private javax.swing.JPanel buttonPanel;
-    private javax.swing.JTextField cellNameField;
     private javax.swing.JLabel cellNameLbl;
+    private javax.swing.JLabel clearSelectionLbl;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JPanel fieldsPanel;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField nameField;
     private javax.swing.JTable table;
     private javax.swing.JButton updateBtn;
     // End of variables declaration//GEN-END:variables

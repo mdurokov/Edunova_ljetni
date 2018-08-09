@@ -11,7 +11,6 @@ import durokovic.ljetnizadatak.tablemodel.ContinentTableModel;
 import java.awt.Component;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 
 
@@ -21,7 +20,7 @@ import javax.swing.JTextField;
  */
 public class ContinentsForm extends javax.swing.JFrame {
     private ContinentController continentController;
-    private int row = 0;
+    private int row;
 
     //  CONSTRUCTORS
     public ContinentsForm() {
@@ -31,11 +30,12 @@ public class ContinentsForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error: " + e, "Error", JOptionPane.ERROR_MESSAGE);
         }
         initComponents();
+        //  showing list of continents
         refreshContinentsView();
     }
     //  END CONSTRUCTORS
 
-
+    //  INITIALIZING COMPONENTS
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -46,6 +46,7 @@ public class ContinentsForm extends javax.swing.JFrame {
         addBtn = new javax.swing.JButton();
         updateBtn = new javax.swing.JButton();
         deleteBtn = new javax.swing.JButton();
+        clearSelectionLbl = new javax.swing.JLabel();
         fieldsPanel = new javax.swing.JPanel();
         nameLbl = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
@@ -57,7 +58,6 @@ public class ContinentsForm extends javax.swing.JFrame {
         longitudeField = new javax.swing.JTextField();
         zoomLbl = new javax.swing.JLabel();
         zoomField = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Continents");
@@ -104,16 +104,28 @@ public class ContinentsForm extends javax.swing.JFrame {
             }
         });
 
+        clearSelectionLbl.setText("Clear Selection");
+        clearSelectionLbl.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                clearSelectionLblMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout buttonPanelLayout = new javax.swing.GroupLayout(buttonPanel);
         buttonPanel.setLayout(buttonPanelLayout);
         buttonPanelLayout.setHorizontalGroup(
             buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buttonPanelLayout.createSequentialGroup()
-                .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(addBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(updateBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 119, Short.MAX_VALUE))
+                .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 109, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(buttonPanelLayout.createSequentialGroup()
+                .addComponent(clearSelectionLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         buttonPanelLayout.setVerticalGroup(
             buttonPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,6 +135,8 @@ public class ContinentsForm extends javax.swing.JFrame {
                     .addComponent(addBtn)
                     .addComponent(updateBtn)
                     .addComponent(deleteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(clearSelectionLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -183,13 +197,6 @@ public class ContinentsForm extends javax.swing.JFrame {
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        jLabel1.setText("Clear Selection");
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -199,44 +206,48 @@ public class ContinentsForm extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(buttonPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(fieldsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fieldsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        //  Getting selected continent form selected row
         row = table.getSelectedRow();
+        //  Getting continent values
         Continent tempContinent = (Continent) table.getValueAt(row, ContinentTableModel.OBJECT_COL);
+        //  Showing values in text fields
         populateContinentGui(tempContinent);
     }//GEN-LAST:event_tableMouseClicked
 
     private void addBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addBtnActionPerformed
         try {
+            //  Getting values from text fields
             String name = nameField.getText();
             String recordName = recordNameField.getText();
             int latitude = Integer.parseInt(latitudeField.getText());
             int longitude = Integer.parseInt(longitudeField.getText());
             int zoom = Integer.parseInt(zoomField.getText());
+            
+            //  Adding continent to continents table
             continentController.addContinent(name, recordName, latitude, longitude, zoom);
+            //  Showing new entry in table view
             refreshContinentsView();
-            clearFields();
+            //  Clearing text fields;
+            clearContinentFields();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -244,39 +255,54 @@ public class ContinentsForm extends javax.swing.JFrame {
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
         try {
+            //  Getting values from text fields
             String name = nameField.getText();
             String recordName = recordNameField.getText();
             int latitude = Integer.parseInt(latitudeField.getText());
             int longitude = Integer.parseInt(longitudeField.getText());
             int zoom = Integer.parseInt(zoomField.getText());
+            //  Getting selected continent form selected row 
             row = table.getSelectedRow();
+            //  Getting id from selected continent
             int id = (int) table.getValueAt(row, ContinentTableModel.ID_COL);
+            //  Updateing selected continent
             continentController.updateContinent(id, name, recordName, latitude, longitude, zoom);
+            //  Showing updated entry in table view
             refreshContinentsView();
+            //  Selecting updated continent
             table.setRowSelectionInterval(row, row);
         } catch (Exception e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,"You need to select what to update!", "Info", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_updateBtnActionPerformed
 
     private void deleteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteBtnActionPerformed
         try {
+            //  Getting id to erase from table continents
+            row = table.getSelectedRow();
             int id = (int) table.getValueAt(row, ContinentTableModel.ID_COL);
+            //  Deleting continent
             continentController.deleteContinent(id);
+            //  Showing table view after change
             refreshContinentsView();
-            clearFields();
+            //  Clearing text fields
+            clearContinentFields();
             
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,"You need to select what to delete!", "Info", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_deleteBtnActionPerformed
 
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        clearFields();
+    private void clearSelectionLblMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clearSelectionLblMouseClicked
+        //  Clearing text fields
+        clearContinentFields();
+        //  Clearing selected row
         table.clearSelection();
-    }//GEN-LAST:event_jLabel1MouseClicked
+    }//GEN-LAST:event_clearSelectionLblMouseClicked
 
     
     //  HELPER METHODS
+    //  -Showing data in table view afrer change
     public void refreshContinentsView(){
         try {
             List<Continent> continents = continentController.getAllContinents();
@@ -287,7 +313,8 @@ public class ContinentsForm extends javax.swing.JFrame {
         }
     }
     
-    public void clearFields(){
+    //  -Clearing text fields
+    public void clearContinentFields(){
         for (Component components : fieldsPanel.getComponents()) {
             if (components instanceof JTextField) {
                 ((JTextField) components).setText("");
@@ -295,6 +322,7 @@ public class ContinentsForm extends javax.swing.JFrame {
         }
     }
     
+    //  -Showing data in text fields
     private void populateContinentGui(Continent tempContinent) {
         nameField.setText(tempContinent.getName());
         recordNameField.setText(tempContinent.getRecordName());
@@ -342,9 +370,9 @@ public class ContinentsForm extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addBtn;
     private javax.swing.JPanel buttonPanel;
+    private javax.swing.JLabel clearSelectionLbl;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JPanel fieldsPanel;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField latitudeField;
     private javax.swing.JLabel latitudeLbl;

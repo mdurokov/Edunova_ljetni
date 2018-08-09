@@ -1,9 +1,8 @@
 
 package durokovic.ljetnizadatak.contoller;
 
-import durokovic.ljetnizadatak.model.Continent;
+import durokovic.ljetnizadatak.model.Event;
 import java.io.FileInputStream;
-import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,15 +16,14 @@ import java.util.Properties;
 /**
  * @author Mata
  */
-public class ContinentController {
+public class EventController {
     //  DECLARING VARIABLES
     private Connection conn;
-
     
     //  CONSTRUCTOR
     //  -Establishing connection with properties from properties 
     //  -external file
-    public ContinentController() throws Exception {
+    public EventController() throws Exception {
         try {
             Properties props = new Properties();
             props.load(new FileInputStream("src/durokovic/ljetnizadatak/properties/database.properties"));
@@ -42,38 +40,53 @@ public class ContinentController {
     }
     
     //  CRUD METHODS
-    //  -Getting all continents 
-    public List<Continent> getAllContinents() throws Exception{
-        List<Continent> continent = new ArrayList<>();
+    //  -Getting all events
+    public List<Event> getAllEvents() throws Exception{
+        List<Event> event = new ArrayList<>();
         Statement stmt = null;
         ResultSet rs = null;
         
         try {
             stmt = conn.createStatement();
-            rs = stmt.executeQuery("select * from continents");
+            rs = stmt.executeQuery("Select * from events");
             
-            while (rs.next()){
-                Continent tempContinent = convertRowsToContinent(rs);
-                continent.add(tempContinent);
+            while (rs.next()) {                
+                Event tempEvent = convertRowsToEvent(rs);
+                event.add(tempEvent);
             }
-            return continent;
+            return event;
         } finally {
-           close(stmt, rs);
+            close(stmt,rs);
+        }
+    } 
+    
+    public void addEvent(String name, int rank, String format, String cellName) throws Exception{
+        PreparedStatement stmt = null;
+        try {
+            stmt = conn.prepareStatement("insert into events (name, rank, format, cellName) values (?,?,?,?);");
+            
+            stmt.setString(1, name);
+            stmt.setInt(2, rank);
+            stmt.setString(3, format);
+            stmt.setString(4, cellName);
+            
+            stmt.executeUpdate();
+        }
+        finally {
+            close(stmt);
         }
     }
     
-    //  ADD 
-    //  -Inserting new continent to continent table
-    public void addContinent(String name, String recordName, int latitude, int longitude, int zoom) throws SQLException{
+    public void updateEvent(int id, String name, int rank, String format, String cellName) throws SQLException {
         PreparedStatement stmt = null;
         try {
-            stmt = conn.prepareStatement("insert into continents (name, recordName, latitude, longitude, zoom) values (?,?,?,?,?);");
+            stmt = conn.prepareStatement("update events set name = ?, rank = ?, format = ?, cellName = ? where id = ?;");
             
             stmt.setString(1, name);
-            stmt.setString(2, recordName);
-            stmt.setInt(3, latitude);
-            stmt.setInt(4, longitude);
-            stmt.setInt(5, zoom);
+            stmt.setInt(2, rank);
+            stmt.setString(3, format);
+            stmt.setString(4, cellName);
+            stmt.setInt(5, id);
             
             stmt.executeUpdate();
         } finally {
@@ -81,40 +94,18 @@ public class ContinentController {
         }
     }
     
-    //  UPDATE
-    //  -Updateing continent values in continent table
-    public void updateContinent(int id, String name, String recordName, int latitude, int longitude, int zoom) throws SQLException{
+    public void deleteEvent(int id) throws SQLException {
         PreparedStatement stmt = null;
         try {
-            stmt = conn.prepareStatement("update continents set name=?, recordName=?, latitude=?, longitude=?, zoom=? where id=?;");
+            stmt = conn.prepareStatement("delete from events where id = ?;");
             
-            stmt.setString(1, name);
-            stmt.setString(2, recordName);
-            stmt.setInt(3, latitude);
-            stmt.setInt(4, longitude);
-            stmt.setInt(5, zoom);
-            stmt.setInt(6, id);
-
-            stmt.executeUpdate();
-            
-        }finally {
-            close(stmt);
-        }           
-    }
-    
-    //  DELETE
-    //  -Deleting continent from continent table
-    public void deleteContinent(int id) throws SQLException{
-        PreparedStatement stmt = null;
-        try {
-            stmt = conn.prepareStatement("delete from continents where id = ?;");
             stmt.setInt(1, id);
+            
             stmt.executeUpdate();
         } finally {
             close(stmt);
         }
     }
-    //  END METHODS
     
     
     //  HELPER METHODS
@@ -145,17 +136,16 @@ public class ContinentController {
     //      END CLOSE HELPER
     
     //      HELPER CONVERT
-    //      -Conwerting rows from table to continent object
-    private Continent convertRowsToContinent(ResultSet rs) throws SQLException{
+    //      -Conwerting rows from table to event object
+    public Event convertRowsToEvent(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
         String name = rs.getString("name");
-        String recordName = rs.getString("recordName");
-        int latitude = rs.getInt("latitude");
-        int longitude = rs.getInt("longitude");
-        int zoom = rs.getInt("zoom");
+        int rank = rs.getInt("rank");
+        String format = rs.getString("format");
+        String cellName = rs.getString("cellName");
         
-        Continent tempContinent = new Continent(id, name, recordName, latitude, longitude, zoom);
-        return tempContinent;
+        Event tempEvent = new Event(id, name, rank, format, cellName);
+        return tempEvent;
     }
-    //  END HELPER METHODS
+    //  END HELPER
 }

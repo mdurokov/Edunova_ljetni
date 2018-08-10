@@ -50,6 +50,7 @@ public class FormatsForm extends javax.swing.JFrame {
         fieldsPanel = new javax.swing.JPanel();
         cellNameLbl = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
+        infoLbl = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
 
@@ -58,6 +59,14 @@ public class FormatsForm extends javax.swing.JFrame {
         setResizable(false);
 
         addBtn.setText("Add");
+        addBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                addBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                addBtnMouseExited(evt);
+            }
+        });
         addBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addBtnActionPerformed(evt);
@@ -65,6 +74,14 @@ public class FormatsForm extends javax.swing.JFrame {
         });
 
         updateBtn.setText("Update");
+        updateBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                updateBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                updateBtnMouseExited(evt);
+            }
+        });
         updateBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateBtnActionPerformed(evt);
@@ -74,6 +91,14 @@ public class FormatsForm extends javax.swing.JFrame {
         deleteBtn.setText("Delete");
         deleteBtn.setMaximumSize(new java.awt.Dimension(125, 23));
         deleteBtn.setMinimumSize(new java.awt.Dimension(125, 23));
+        deleteBtn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                deleteBtnMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                deleteBtnMouseExited(evt);
+            }
+        });
         deleteBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 deleteBtnActionPerformed(evt);
@@ -81,6 +106,7 @@ public class FormatsForm extends javax.swing.JFrame {
         });
 
         clearSelectionLbl.setText("Clear Selection");
+        clearSelectionLbl.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         clearSelectionLbl.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 clearSelectionLblMouseClicked(evt);
@@ -117,24 +143,39 @@ public class FormatsForm extends javax.swing.JFrame {
 
         cellNameLbl.setText(" Name: ");
 
+        nameField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nameFieldKeyTyped(evt);
+            }
+        });
+
+        infoLbl.setForeground(new java.awt.Color(255, 51, 51));
+        infoLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        infoLbl.setBorder(javax.swing.BorderFactory.createTitledBorder("Info Panel"));
+
         javax.swing.GroupLayout fieldsPanelLayout = new javax.swing.GroupLayout(fieldsPanel);
         fieldsPanel.setLayout(fieldsPanelLayout);
         fieldsPanelLayout.setHorizontalGroup(
             fieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, fieldsPanelLayout.createSequentialGroup()
+            .addGroup(fieldsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(cellNameLbl)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(fieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(infoLbl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(fieldsPanelLayout.createSequentialGroup()
+                        .addComponent(cellNameLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         fieldsPanelLayout.setVerticalGroup(
             fieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(fieldsPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(fieldsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cellNameLbl))
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(infoLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
         );
 
         table.setModel(new javax.swing.table.DefaultTableModel(
@@ -232,6 +273,63 @@ public class FormatsForm extends javax.swing.JFrame {
         populateFormatGui(tempFormat);
     }//GEN-LAST:event_tableMouseClicked
 
+    private void nameFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameFieldKeyTyped
+        if(nameField.getText().length() > 49){
+            infoLbl.setText("Limit is 50 characters!");
+            getToolkit().beep();
+            evt.consume();
+        }
+    }//GEN-LAST:event_nameFieldKeyTyped
+
+    private void addBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addBtnMouseEntered
+        if(nameField.getText().trim().isEmpty()){
+            addBtn.setEnabled(false);
+            infoLbl.setText("Field Name can't be empty!");
+        }
+    }//GEN-LAST:event_addBtnMouseEntered
+
+    private void addBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addBtnMouseExited
+        addBtn.setEnabled(true);
+    }//GEN-LAST:event_addBtnMouseExited
+
+    private void updateBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateBtnMouseEntered
+        row = table.getSelectedRow();
+        if(nameField.getText().trim().isEmpty()){
+            updateBtn.setEnabled(false);
+            infoLbl.setText("Field Name can't be empty!");
+        }
+        
+        if(row == -1){
+            updateBtn.setEnabled(false);
+            infoLbl.setText("Select what to update!");
+        }
+        
+        if(row > -1){
+            updateBtn.setEnabled(true);
+            infoLbl.setText("");
+        }
+    }//GEN-LAST:event_updateBtnMouseEntered
+
+    private void updateBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateBtnMouseExited
+        updateBtn.setEnabled(true);
+    }//GEN-LAST:event_updateBtnMouseExited
+
+    private void deleteBtnMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteBtnMouseEntered
+        row = table.getSelectedRow();
+        if(row==-1){
+            deleteBtn.setEnabled(false);
+            infoLbl.setText("Select what to delete!");
+        }
+        if(row > -1){
+            deleteBtn.setEnabled(true);
+            infoLbl.setText("");
+        }
+    }//GEN-LAST:event_deleteBtnMouseEntered
+
+    private void deleteBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteBtnMouseExited
+        deleteBtn.setEnabled(true);
+    }//GEN-LAST:event_deleteBtnMouseExited
+
     
     
     
@@ -252,6 +350,7 @@ public class FormatsForm extends javax.swing.JFrame {
                 ((JTextField) components).setText("");
             }
         }
+        infoLbl.setText("");
     }
     
     public void populateFormatGui(Format tempEvent){
@@ -300,6 +399,7 @@ public class FormatsForm extends javax.swing.JFrame {
     private javax.swing.JLabel clearSelectionLbl;
     private javax.swing.JButton deleteBtn;
     private javax.swing.JPanel fieldsPanel;
+    private javax.swing.JLabel infoLbl;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField nameField;
     private javax.swing.JTable table;

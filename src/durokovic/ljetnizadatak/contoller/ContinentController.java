@@ -1,9 +1,10 @@
 
 package durokovic.ljetnizadatak.contoller;
 
+import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import durokovic.ljetnizadatak.model.Continent;
+import durokovic.ljetnizadatak.view.ContinentsForm;
 import java.io.FileInputStream;
-import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,6 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import javax.swing.JOptionPane;
 
 /**
  * @author Mata
@@ -36,8 +38,9 @@ public class ContinentController {
             
             conn = DriverManager.getConnection(db, user, password);
             
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (CommunicationsException e) {
+            JOptionPane.showMessageDialog(null,"Error: Cannot connect to database. \n Closing app!", "MYSQL Connection Error", JOptionPane.ERROR_MESSAGE);
+            System.exit(0);
         }
     }
     

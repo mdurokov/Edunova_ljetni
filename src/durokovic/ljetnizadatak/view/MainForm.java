@@ -82,8 +82,10 @@ public class MainForm extends javax.swing.JFrame {
         });
 
         codeLinkLbl.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        codeLinkLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/durokovic/ljetnizadatak/img/git.png"))); // NOI18N
         codeLinkLbl.setText("Link To Code");
         codeLinkLbl.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        codeLinkLbl.setIconTextGap(20);
         codeLinkLbl.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 codeLinkLblMouseClicked(evt);

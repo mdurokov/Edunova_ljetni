@@ -3,7 +3,6 @@ package durokovic.ljetnizadatak.contoller;
 
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import durokovic.ljetnizadatak.model.Continent;
-import durokovic.ljetnizadatak.view.ContinentsForm;
 import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -153,8 +152,8 @@ public class ContinentController {
         int id = rs.getInt("id");
         String name = rs.getString("name");
         String recordName = rs.getString("recordName");
-        int latitude = rs.getInt("latitude");
-        int longitude = rs.getInt("longitude");
+        String latitude = rs.getString("latitude");
+        String longitude = rs.getString("longitude");
         int zoom = rs.getInt("zoom");
         
         Continent tempContinent = new Continent(id, name, recordName, latitude, longitude, zoom);

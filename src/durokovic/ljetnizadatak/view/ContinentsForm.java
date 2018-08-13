@@ -456,13 +456,20 @@ public class ContinentsForm extends javax.swing.JFrame {
 
     private void latitudeFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_latitudeFieldKeyTyped
         char e = evt.getKeyChar();
-        if(!(Character.isDigit(e))){
+        if(!(Character.isDigit(e)) && e != '.'){
             infoLbl.setText("Numbers only!");
             getToolkit().beep();
             evt.consume();
         }
-        if(latitudeField.getText().length() > 8){
-            infoLbl.setText("You can't input more than 9 numbers!");
+        
+        if(latitudeField.getText().contains(".") && e == '.'){
+            infoLbl.setText("Only one dot is allowed!");
+            getToolkit().beep();
+            evt.consume();
+        }
+        
+        if(latitudeField.getText().length() > 10){
+            infoLbl.setText("You can't input more than 11 numbers!");
             getToolkit().beep();
             evt.consume();
         }
@@ -470,13 +477,20 @@ public class ContinentsForm extends javax.swing.JFrame {
 
     private void longitudeFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_longitudeFieldKeyTyped
         char e = evt.getKeyChar();
-        if(!(Character.isDigit(e))){
+        if(!(Character.isDigit(e)) && e != '.'){
             infoLbl.setText("Numbers only!");
             getToolkit().beep();
             evt.consume();
         }
-        if(latitudeField.getText().length() > 8){
-            infoLbl.setText("You can't input more than 9 numbers!");
+        
+        if(longitudeField.getText().contains(".") && e == '.'){
+            infoLbl.setText("Only one dot is allowed!");
+            getToolkit().beep();
+            evt.consume();
+        }
+        
+        if(longitudeField.getText().length() > 10){
+            infoLbl.setText("You can't input more than 11 numbers!");
             getToolkit().beep();
             evt.consume();
         }
@@ -527,8 +541,8 @@ public class ContinentsForm extends javax.swing.JFrame {
     private void populateContinentGui(Continent tempContinent) {
         nameField.setText(tempContinent.getName());
         recordNameField.setText(tempContinent.getRecordName());
-        longitudeField.setText(tempContinent.toString(tempContinent.getLongitude()));
-        latitudeField.setText(tempContinent.toString(tempContinent.getLatitude()));
+        longitudeField.setText(tempContinent.getLongitude());
+        latitudeField.setText(tempContinent.getLatitude());
         zoomField.setText(tempContinent.toString(tempContinent.getZoom()));
     }
     //  END HELPER METHODS

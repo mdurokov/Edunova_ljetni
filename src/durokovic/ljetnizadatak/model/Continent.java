@@ -9,13 +9,13 @@ public class Continent {
     private int id;
     private String name;
     private String recordName;
-    private int latitude;
-    private int longitude;
+    private String latitude;
+    private String longitude;
     private int zoom;
     //  END INIT VARS
     
     //  CONSTRUCTORS
-    public Continent(int id, String name, String recordName, int latitude, int longitude, int zoom) {
+    public Continent(int id, String name, String recordName, String latitude, String longitude, int zoom) {
         this.id = id;
         this.name = name;
         this.recordName = recordName;
@@ -53,19 +53,19 @@ public class Continent {
         this.recordName = recordName;
     }
 
-    public int getLatitude() {
+    public String getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(int latitude) {
+    public void setLatitude(String latitude) {
         this.latitude = latitude;
     }
 
-    public int getLongitude() {
+    public String getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(int longitude) {
+    public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
 

@@ -1,5 +1,5 @@
 
-package durokovic.ljetnizadatak.contoller;
+package durokovic.ljetnizadatak.controller;
 
 import durokovic.ljetnizadatak.model.Event;
 import java.io.FileInputStream;
@@ -136,7 +136,7 @@ public class EventController {
     //      END CLOSE HELPER
     
     //      HELPER CONVERT
-    //      -Conwerting rows from table to event object
+    //      -Converting rows from table to event object
     public Event convertRowsToEvent(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
         String name = rs.getString("name");

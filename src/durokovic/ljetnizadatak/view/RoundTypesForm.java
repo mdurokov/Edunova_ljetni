@@ -5,7 +5,7 @@
  */
 package durokovic.ljetnizadatak.view;
 
-import durokovic.ljetnizadatak.contoller.RoundTypeController;
+import durokovic.ljetnizadatak.controller.RoundTypeController;
 import durokovic.ljetnizadatak.model.RoundType;
 import durokovic.ljetnizadatak.tablemodel.RoundTypeTableModel;
 import java.awt.Component;
@@ -408,11 +408,6 @@ public class RoundTypesForm extends javax.swing.JFrame {
             updateBtn.setEnabled(false);
             infoLbl.setText("Select what to update!");
         }
-        
-        if(row > -1){
-            updateBtn.setEnabled(true);
-            infoLbl.setText("");
-        }
     }//GEN-LAST:event_updateBtnMouseEntered
 
     private void updateBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateBtnMouseExited
@@ -424,10 +419,6 @@ public class RoundTypesForm extends javax.swing.JFrame {
         if(row==-1){
             deleteBtn.setEnabled(false);
             infoLbl.setText("Select what to delete!");
-        }
-        if(row > -1){
-            deleteBtn.setEnabled(true);
-            infoLbl.setText("");
         }
     }//GEN-LAST:event_deleteBtnMouseEntered
 

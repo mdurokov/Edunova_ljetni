@@ -5,7 +5,7 @@
  */
 package durokovic.ljetnizadatak.view;
 
-import durokovic.ljetnizadatak.contoller.ContinentController;
+import durokovic.ljetnizadatak.controller.ContinentController;
 import durokovic.ljetnizadatak.model.Continent;
 import durokovic.ljetnizadatak.tablemodel.ContinentTableModel;
 import java.awt.Component;
@@ -324,10 +324,6 @@ public class ContinentsForm extends javax.swing.JFrame {
 
     private void updateBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateBtnActionPerformed
         try {
-            //  Getting values from text fields
-            if(nameField.getText().trim().isEmpty() || recordNameField.getText().trim().isEmpty()){
-                throw new RuntimeException("adokoakm");
-            }
             String name = nameField.getText();
             String recordName = recordNameField.getText();
             int latitude = Integer.parseInt(latitudeField.getText());
@@ -427,11 +423,6 @@ public class ContinentsForm extends javax.swing.JFrame {
             updateBtn.setEnabled(false);
             infoLbl.setText("Select what to update!");
         }
-        
-        if(row > -1){
-            updateBtn.setEnabled(true);
-            infoLbl.setText("");
-        }
     }//GEN-LAST:event_updateBtnMouseEntered
 
     private void updateBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateBtnMouseExited
@@ -443,10 +434,6 @@ public class ContinentsForm extends javax.swing.JFrame {
         if(row==-1){
             deleteBtn.setEnabled(false);
             infoLbl.setText("Select what to delete!");
-        }
-        if(row > -1){
-            deleteBtn.setEnabled(true);
-            infoLbl.setText("");
         }
     }//GEN-LAST:event_deleteBtnMouseEntered
 

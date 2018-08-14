@@ -1,5 +1,5 @@
 
-package durokovic.ljetnizadatak.contoller;
+package durokovic.ljetnizadatak.controller;
 
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException;
 import durokovic.ljetnizadatak.model.Continent;
@@ -84,7 +84,7 @@ public class ContinentController {
     }
     
     //  UPDATE
-    //  -Updateing continent values in continent table
+    //  -Updating continent values in continent table
     public void updateContinent(int id, String name, String recordName, int latitude, int longitude, int zoom) throws SQLException{
         PreparedStatement stmt = null;
         try {
@@ -147,7 +147,7 @@ public class ContinentController {
     //      END CLOSE HELPER
     
     //      HELPER CONVERT
-    //      -Conwerting rows from table to continent object
+    //      -Converting rows from table to continent object
     private Continent convertRowsToContinent(ResultSet rs) throws SQLException{
         int id = rs.getInt("id");
         String name = rs.getString("name");

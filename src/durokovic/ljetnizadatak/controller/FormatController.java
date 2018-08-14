@@ -1,5 +1,5 @@
 
-package durokovic.ljetnizadatak.contoller;
+package durokovic.ljetnizadatak.controller;
 
 import durokovic.ljetnizadatak.model.Format;
 import java.io.FileInputStream;

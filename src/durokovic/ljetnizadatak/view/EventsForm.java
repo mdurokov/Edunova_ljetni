@@ -5,7 +5,7 @@
  */
 package durokovic.ljetnizadatak.view;
 
-import durokovic.ljetnizadatak.contoller.EventController;
+import durokovic.ljetnizadatak.controller.EventController;
 import durokovic.ljetnizadatak.model.Event;
 import durokovic.ljetnizadatak.tablemodel.EventTableModel;
 import java.awt.Component;
@@ -399,11 +399,6 @@ public class EventsForm extends javax.swing.JFrame {
             updateBtn.setEnabled(false);
             infoLbl.setText("Select what to update!");
         }
-        
-        if(row > -1){
-            updateBtn.setEnabled(true);
-            infoLbl.setText("");
-        }
     }//GEN-LAST:event_updateBtnMouseEntered
 
     private void updateBtnMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateBtnMouseExited
@@ -415,10 +410,6 @@ public class EventsForm extends javax.swing.JFrame {
         if(row==-1){
             deleteBtn.setEnabled(false);
             infoLbl.setText("Select what to delete!");
-        }
-        if(row > -1){
-            deleteBtn.setEnabled(true);
-            infoLbl.setText("");
         }
     }//GEN-LAST:event_deleteBtnMouseEntered
 

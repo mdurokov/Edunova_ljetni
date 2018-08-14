@@ -1,5 +1,5 @@
 
-package durokovic.ljetnizadatak.contoller;
+package durokovic.ljetnizadatak.controller;
 
 import durokovic.ljetnizadatak.model.RoundType;
 import java.io.FileInputStream;
@@ -128,7 +128,7 @@ public class RoundTypeController {
     //      END CLOSE HELPER
     
     //      HELPER CONVERT
-    //      -Conwerting rows from table to event object
+    //      -Converting rows from table to event object
     public RoundType convertRowsToRountType(ResultSet rs) throws SQLException {
         int id = rs.getInt("id");
         int rank = rs.getInt("rank");

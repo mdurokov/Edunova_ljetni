@@ -9,7 +9,6 @@ import durokovic.ljetnizadatak.controller.RoundTypeController;
 import durokovic.ljetnizadatak.model.RoundType;
 import durokovic.ljetnizadatak.tablemodel.RoundTypeTableModel;
 import java.awt.Component;
-import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -365,7 +364,6 @@ public class RoundTypesForm extends javax.swing.JFrame {
 
     private void finalFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_finalFieldKeyTyped
         char e = evt.getKeyChar();
-        System.out.println(e);
         if(e != '1'  && e != '0'){
             infoLbl.setText("Enter 1 or 0! 1(true), 0(false)");
             getToolkit().beep();

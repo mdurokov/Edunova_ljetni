@@ -336,14 +336,11 @@ public class EventsForm extends javax.swing.JFrame {
     }//GEN-LAST:event_nameFieldKeyTyped
 
     private void formatFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formatFieldKeyTyped
-        char e = evt.getKeyChar();
         if(formatField.getText().length() > 9){
             infoLbl.setText("Limit is 10 characters!");
             getToolkit().beep();
             evt.consume();
         }
-        
-        
     }//GEN-LAST:event_formatFieldKeyTyped
 
     private void rankFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_rankFieldKeyTyped

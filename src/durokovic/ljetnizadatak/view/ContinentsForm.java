@@ -443,7 +443,7 @@ public class ContinentsForm extends javax.swing.JFrame {
 
     private void latitudeFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_latitudeFieldKeyTyped
         char e = evt.getKeyChar();
-        if(!(Character.isDigit(e)) && e != '.'){
+        if(!(Character.isDigit(e))){
             infoLbl.setText("Numbers only!");
             getToolkit().beep();
             evt.consume();
@@ -464,7 +464,7 @@ public class ContinentsForm extends javax.swing.JFrame {
 
     private void longitudeFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_longitudeFieldKeyTyped
         char e = evt.getKeyChar();
-        if(!(Character.isDigit(e)) && e != '.'){
+        if(!(Character.isDigit(e))){
             infoLbl.setText("Numbers only!");
             getToolkit().beep();
             evt.consume();
@@ -494,7 +494,7 @@ public class ContinentsForm extends javax.swing.JFrame {
     private void recordNameFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_recordNameFieldKeyTyped
         char e = evt.getKeyChar();
                 
-        if(nameField.getText().length() > 2){
+        if(recordNameField.getText().length() > 2){
             infoLbl.setText("Limit is 3 characters!");
             getToolkit().beep();
             evt.consume();
